@@ -20,7 +20,8 @@ namespace PubSub.Solution
 		/// <exception cref="InvalidTopicException"></exception>
 		public void Publish(string topic, T message)
 		{
-			_subscribers[topic](topic, message);
+			if (_subscribers.ContainsKey(topic))
+				_subscribers[topic](topic, message);
 		}
 
 		/// <summary>
