@@ -16,7 +16,7 @@ namespace PubSub
 		[InlineData("/home/#")]
 		public void CannotCreateInvalidTopic(string topicAsString)
 		{
-			var ex = Assert.Throws<InvalidTopicException>(() => new Topic(topicAsString));
+			var ex = Assert.Throws<InvalidTopicException>(() => Topic.From(topicAsString));
 			Assert.NotNull(ex);
 		}
 
@@ -24,7 +24,7 @@ namespace PubSub
 		[InlineData("/home/123")]
 		public void CanCreateTopicFromValidString(string topicAsString)
 		{
-			new Topic(topicAsString);
+			Topic.From(topicAsString);
 		}
 	}
 }
