@@ -13,6 +13,17 @@ namespace PubSub.Solution
 		private readonly Dictionary<string, Action<string, T>> _subscribers = new Dictionary<string, Action<string, T>>();
 
 		/// <summary>
+		/// Subscribes the specified topic.
+		/// </summary>
+		/// <param name="topic">The topic.</param>
+		/// <param name="callback">The event.</param>
+		/// <exception cref="InvalidTopicException">Topic is invalid.</exception>
+		public void Subscribe(string topic, Action<string, T> callback)
+		{
+			_subscribers.Add(topic, callback);
+		}
+
+		/// <summary>
 		/// Publishes the message to specified topic.
 		/// </summary>
 		/// <param name="message">The message.</param>
@@ -24,23 +35,12 @@ namespace PubSub.Solution
 				_subscribers[topic](topic, message);
 		}
 
-		/// <summary>
-		/// Subscribes the specified topic.
-		/// </summary>
-		/// <param name="topic">The topic.</param>
-		/// <param name="callback">The event.</param>
-		/// <exception cref="InvalidTopicException">Topic is invalid.</exception>
-		public void Subscribe(string topic, Action<string, T> callback)
-		{
-			_subscribers.Add(topic, callback);
-		}
-
-		public void Publish(Topic topic, T message)
+		public void Subscribe(Topic topic, Action<Topic, T> callback)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void Subscribe(Topic topic, Action<Topic, T> callback)
+		public void Publish(Topic topic, T message)
 		{
 			throw new NotImplementedException();
 		}
