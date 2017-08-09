@@ -31,6 +31,8 @@ namespace PubSub.Solution
 		/// <exception cref="InvalidTopicException"></exception>
 		public void Publish(string topic, T message)
 		{
+			var aTopic = Topic.From(topic);
+			
 			if (_subscribers.ContainsKey(topic))
 				_subscribers[topic](topic, message);
 		}

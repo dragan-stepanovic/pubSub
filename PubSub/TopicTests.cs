@@ -9,11 +9,13 @@ namespace PubSub
 		[InlineData(null)]
 		[InlineData("")]
 		[InlineData(" ")]
+		[InlineData("/")]
 		[InlineData("invalid")]
 		[InlineData("invalid/")]
 		[InlineData("/home/")]
 		[InlineData("//home")]
 		[InlineData("/home/#")]
+		[InlineData("/home/kit chen")]
 		public void CannotCreateInvalidTopic(string topicAsString)
 		{
 			var ex = Assert.Throws<InvalidTopicException>(() => Topic.From(topicAsString));

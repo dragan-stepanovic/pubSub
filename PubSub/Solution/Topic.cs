@@ -12,11 +12,6 @@ namespace PubSub.Solution
 			_value = value;
 		}
 
-		public static implicit operator string(Topic topic)
-		{
-			return topic._value;
-		}
-
 		public static Topic From(string topicAsString)
 		{
 			if (string.IsNullOrWhiteSpace(topicAsString) || !topicAsString.StartsWith("/") || topicAsString.Contains("//") || topicAsString.EndsWith("/"))
