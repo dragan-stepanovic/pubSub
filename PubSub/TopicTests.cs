@@ -22,6 +22,7 @@ namespace PubSub
 
 		[Theory]
 		[InlineData("/home/123")]
+		[InlineData("/home/kitchen/oW3n")]
 		public void CanCreateTopicFromValidString(string topicAsString)
 		{
 			Topic.From(topicAsString);
