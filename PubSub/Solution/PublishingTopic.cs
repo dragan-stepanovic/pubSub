@@ -3,16 +3,16 @@ using System.Text.RegularExpressions;
 
 namespace PubSub.Solution
 {
-	public class Topic
+	public class PublishingTopic
 	{
 		private readonly string _value;
 
-		private Topic(string value)
+		private PublishingTopic(string value)
 		{
 			_value = value;
 		}
 
-		public static Topic From(string topicAsString)
+		public static PublishingTopic From(string topicAsString)
 		{
 			if (string.IsNullOrWhiteSpace(topicAsString) || !topicAsString.StartsWith("/") || topicAsString.Contains("//") || topicAsString.EndsWith("/"))
 				throw new InvalidTopicException(topicAsString);
@@ -23,7 +23,7 @@ namespace PubSub.Solution
 			if (levels.Any(level => !alphaNumeric.IsMatch(level)))
 				throw new InvalidTopicException(topicAsString);
 
-			return new Topic(topicAsString);
+			return new PublishingTopic(topicAsString);
 		}
 	}
 }

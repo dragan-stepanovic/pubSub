@@ -10,7 +10,8 @@ namespace PubSub.Solution
 	/// <seealso cref="IPubSub{T}" />
 	public class SimplePubSub<T> : IPubSub<T>
 	{
-		private readonly Dictionary<string, Action<string, T>> _subscribers = new Dictionary<string, Action<string, T>>();
+		private readonly Dictionary<string, Action<string, T>> _subscribersOld = new Dictionary<string, Action<string, T>>();
+		private readonly Subscriptions<T> _subscriptions = new Subscriptions<T>();
 
 		/// <summary>
 		/// Subscribes the specified topic.
@@ -20,7 +21,8 @@ namespace PubSub.Solution
 		/// <exception cref="InvalidTopicException">Topic is invalid.</exception>
 		public void Subscribe(string topic, Action<string, T> callback)
 		{
-			_subscribers.Add(topic, callback);
+			_subscribersOld.Add(topic, callback);
+			_subscriptions.Add(topic, callback);
 		}
 
 		/// <summary>
@@ -31,20 +33,20 @@ namespace PubSub.Solution
 		/// <exception cref="InvalidTopicException"></exception>
 		public void Publish(string topic, T message)
 		{
-			var aTopic = Topic.From(topic);
+			var aTopic = PublishingTopic.From(topic);
 			
-			if (_subscribers.ContainsKey(topic))
-				_subscribers[topic](topic, message);
+			if (_subscribersOld.ContainsKey(topic))
+				_subscribersOld[topic](topic, message);
 		}
+	}
 
-		public void Subscribe(Topic topic, Action<Topic, T> callback)
-		{
-			throw new NotImplementedException();
-		}
+	internal class Subscriptions<T>
+	{
+		private readonly Dictionary<SubscriptionTopic, Action<string, T>> _subscriptions = new Dictionary<SubscriptionTopic, Action<string, T>>();
 
-		public void Publish(Topic topic, T message)
+		public void Add(string subscriptionAsString, Action<string, T> callback)
 		{
-			throw new NotImplementedException();
+			_subscriptions.Add(SubscriptionTopic.From(subscriptionAsString), callback);
 		}
 	}
 }

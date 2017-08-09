@@ -77,9 +77,10 @@
     <Compile Include="Solution\InvalidTopicException.cs" />
     <Compile Include="Solution\IPubSub.cs" />
     <Compile Include="Solution\SimplePubSub.cs" />
-    <Compile Include="Solution\Topic.cs" />
-    <Compile Include="SubscriptionTests.cs" />
-    <Compile Include="TopicTests.cs" />
+    <Compile Include="Solution\PublishingTopic.cs" />
+    <Compile Include="SubscriptionTopic.cs" />
+    <Compile Include="SubscriptionTopicTests.cs" />
+    <Compile Include="PublishingTopicTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

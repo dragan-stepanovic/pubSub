@@ -3,7 +3,7 @@ using Xunit;
 
 namespace PubSub
 {
-	public class TopicTests
+	public class PublishingTopicTests
 	{
 		[Theory]
 		[InlineData(null)]
@@ -18,7 +18,7 @@ namespace PubSub
 		[InlineData("/home/kit chen")]
 		public void CannotCreateInvalidTopic(string topicAsString)
 		{
-			var ex = Assert.Throws<InvalidTopicException>(() => Topic.From(topicAsString));
+			var ex = Assert.Throws<InvalidTopicException>(() => PublishingTopic.From(topicAsString));
 			Assert.NotNull(ex);
 		}
 
@@ -27,7 +27,7 @@ namespace PubSub
 		[InlineData("/home/kitchen/oW3n")]
 		public void CanCreateTopicFromValidString(string topicAsString)
 		{
-			Topic.From(topicAsString);
+			PublishingTopic.From(topicAsString);
 		}
 	}
 }
