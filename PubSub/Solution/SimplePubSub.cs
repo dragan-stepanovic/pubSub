@@ -34,5 +34,15 @@ namespace PubSub.Solution
 		{
 			_subscribers.Add(topic, callback);
 		}
+
+		public void Publish(Topic topic, T message)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Subscribe(Topic topic, Action<Topic, T> callback)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
