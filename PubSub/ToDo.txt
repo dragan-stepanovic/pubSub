@@ -1,4 +1,4 @@
 ﻿SimplePubSub
 	check if the topic exists before subscribing
 	check if the topic exists before publishing
-Topic can be only alphanumeric characters
+Topic levels can contain only alphanumeric characters
