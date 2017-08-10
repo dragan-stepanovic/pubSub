@@ -32,12 +32,11 @@ namespace PubSub.Tests
 			SubscriptionTopic.From(subscriptionAsString);
 		}
 
-
 		[Theory]
 		[InlineData("/home/bedroom/+", "/home/bedroom/temperature", true)]
 		[InlineData("/home/bedroom/+", "/home/bedroom/humidity", true)]
 		//todo: change to member data and use SubscriptionTopic and PublishingTopic
-		public void MatchesPublishingTopic(string subscriptionAsString, string publishingAsString , bool isMatched)
+		public void MatchesPublishingTopic(string subscriptionAsString, string publishingAsString, bool isMatched)
 		{
 			SubscriptionTopic.From(subscriptionAsString)
 				.Matches(PublishingTopic.From(publishingAsString))

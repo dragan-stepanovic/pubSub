@@ -72,6 +72,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solution\Level.cs" />
+    <Compile Include="Tests\LevelTests.cs" />
     <Compile Include="Tests\Recorder.cs" />
     <Compile Include="Tests\PubSubTests.cs" />
     <Compile Include="Solution\InvalidTopicException.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Solution\SubscriptionTopic.cs" />
     <Compile Include="Tests\SubscriptionTopicTests.cs" />
     <Compile Include="Tests\PublishingTopicTests.cs" />
+    <Compile Include="Solution\Wildcard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
