@@ -33,8 +33,16 @@ namespace PubSub.Tests
 		}
 
 		[Theory]
+		[InlineData("/home/bedroom/temperature", "/home/bedroom/temperature", true)]
 		[InlineData("/home/bedroom/+", "/home/bedroom/temperature", true)]
-		[InlineData("/home/bedroom/+", "/home/bedroom/humidity", true)]
+		[InlineData("/home/bedroom/#", "/home/bedroom/somethingElse", true)]
+		[InlineData("/home/bedroom/#", "/home/bedroom/temperature/somethingElse", true)]
+		[InlineData("/home/bedroom/+/somethingElse", "/home/bedroom/temperature/somethingElse", true)]
+
+		[InlineData("/home/bedroom/+", "/home/humidity/somethingElse", false)]
+		[InlineData("/home/bedroom/+/somethingElse", "/home/bedroom/temperature/kitchen", false)]
+		[InlineData("/home/bedroom/#", "/home/humidity/somethingElse", false)]
+		[InlineData("/home/+/temperature/+", "/office/garage/temperature/celsius", false)]
 		//todo: change to member data and use SubscriptionTopic and PublishingTopic
 		public void MatchesPublishingTopic(string subscriptionAsString, string publishingAsString, bool isMatched)
 		{
