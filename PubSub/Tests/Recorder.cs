@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PubSub
+namespace PubSub.Tests
 {
 	internal class Recorder<T>
 	{

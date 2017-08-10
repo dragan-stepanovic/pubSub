@@ -1,7 +1,7 @@
 ﻿using PubSub.Solution;
 using Xunit;
 
-namespace PubSub
+namespace PubSub.Tests
 {
 	public class SubscriptionTopicTests
 	{
@@ -30,6 +30,7 @@ namespace PubSub
 		{
 			SubscriptionTopic.From(subscriptionAsString);
 		}
+
 
 		//SubscriptionTopic
 	}
