@@ -9,7 +9,7 @@ namespace PubSub.Solution
 			_value = asString;
 		}
 
-		//todo: revert back to matches to allign with domain
+		//todo: revert back to Matches to allign better with domain
 		public bool Equals(Level thatLevel)
 		{
 			return _value.Equals(Wildcard.SingleLevel) || _value.Equals(Wildcard.MultiLevel) || this._value.Equals(thatLevel._value);

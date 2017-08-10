@@ -17,12 +17,15 @@ namespace PubSub.Solution
 		//todo: refactor towards better naming
 		public static PublishingTopic From(string topicAsString)
 		{
-			if (string.IsNullOrWhiteSpace(topicAsString) || !topicAsString.StartsWith("/") || topicAsString.Contains("//") || topicAsString.EndsWith("/"))
+			if (string.IsNullOrWhiteSpace(topicAsString)
+				|| !topicAsString.StartsWith("/") 
+				|| topicAsString.Contains("//") 
+				|| topicAsString.EndsWith("/"))
 				throw new InvalidTopicException(topicAsString);
 
-			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
 			var levels = topicAsString.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
+			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
 			if (levels.Any(level => !alphaNumeric.IsMatch(level)))
 				throw new InvalidTopicException(topicAsString);
 

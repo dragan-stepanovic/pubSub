@@ -23,10 +23,10 @@ namespace PubSub.Solution
 				|| subscriptionAsString.EndsWith("/"))
 				throw new InvalidTopicException(subscriptionAsString);
 
-			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
-			var levels = subscriptionAsString.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+			var levels = subscriptionAsString.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
 			//todo: move validation to Level and change the thrown exception to InvalidLevelException
+			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
 			if (levels.Any(level => !alphaNumeric.IsMatch(level) && !level.Equals("#") && !level.Equals("+")))
 				throw new InvalidTopicException(subscriptionAsString);
 
