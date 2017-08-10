@@ -72,16 +72,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recorder.cs" />
-    <Compile Include="PubSubTests.cs" />
+    <Compile Include="Tests\Recorder.cs" />
+    <Compile Include="Tests\PubSubTests.cs" />
     <Compile Include="Solution\InvalidTopicException.cs" />
     <Compile Include="Solution\IPubSub.cs" />
     <Compile Include="Solution\SimplePubSub.cs" />
     <Compile Include="Solution\PublishingTopic.cs" />
     <Compile Include="Solution\Subscribers.cs" />
     <Compile Include="Solution\SubscriptionTopic.cs" />
-    <Compile Include="SubscriptionTopicTests.cs" />
-    <Compile Include="PublishingTopicTests.cs" />
+    <Compile Include="Tests\SubscriptionTopicTests.cs" />
+    <Compile Include="Tests\PublishingTopicTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
