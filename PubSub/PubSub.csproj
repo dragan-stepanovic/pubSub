@@ -78,7 +78,8 @@
     <Compile Include="Solution\IPubSub.cs" />
     <Compile Include="Solution\SimplePubSub.cs" />
     <Compile Include="Solution\PublishingTopic.cs" />
-    <Compile Include="SubscriptionTopic.cs" />
+    <Compile Include="Solution\Subscribers.cs" />
+    <Compile Include="Solution\SubscriptionTopic.cs" />
     <Compile Include="SubscriptionTopicTests.cs" />
     <Compile Include="PublishingTopicTests.cs" />
   </ItemGroup>

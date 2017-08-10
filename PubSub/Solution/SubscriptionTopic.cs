@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using PubSub.Solution;
 
-namespace PubSub
+namespace PubSub.Solution
 {
 	public class SubscriptionTopic
 	{
