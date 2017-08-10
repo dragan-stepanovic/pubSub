@@ -27,8 +27,8 @@ namespace PubSub.Solution
 		public Subscribers<T> Matching(PublishingTopic publishingTopic)
 		{
 			return new Subscribers<T>(_subscribers
-				.Where(sub => sub.Key.Matches(publishingTopic))
-				.ToDictionary(x => x.Key, x => x.Value));
+										.Where(sub => sub.Key.Matches(publishingTopic))
+										.ToDictionary(x => x.Key, x => x.Value));
 		}
 
 		public void InvokeCallbacksFor(PublishingTopic publishingTopic, T message)
