@@ -31,7 +31,6 @@ namespace PubSub.Solution
 		public void Publish(string topicAsString, T message)
 		{
 			//note: I'd rather pass strongly typed PublishingTopic as the parameter, but in order to not change the original tests, I did the conversion here; same goes for Subscribe method
-
 			var publishingTopic = PublishingTopic.From(topicAsString);
 			_subscribers
 				.Matching(publishingTopic)

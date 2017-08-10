@@ -7,9 +7,9 @@ namespace PubSub.Solution
 {
 	public class PublishingTopic
 	{
-		private readonly IEnumerable<string> _levels;
+		private readonly IEnumerable<Level> _levels;
 
-		private PublishingTopic(IEnumerable<string> levels)
+		private PublishingTopic(IEnumerable<Level> levels)
 		{
 			_levels = levels;
 		}
@@ -21,12 +21,12 @@ namespace PubSub.Solution
 				throw new InvalidTopicException(topicAsString);
 
 			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
-			var levels = topicAsString.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+			var levels = topicAsString.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
 			if (levels.Any(level => !alphaNumeric.IsMatch(level)))
 				throw new InvalidTopicException(topicAsString);
 
-			return new PublishingTopic(levels);
+			return new PublishingTopic(levels.Select(asString => new Level(asString)));
 		}
 
 		public static implicit operator string(PublishingTopic topic)
@@ -35,7 +35,7 @@ namespace PubSub.Solution
 			return separator + string.Join(separator, topic._levels);
 		}
 
-		public IEnumerable<string> AsLevels()
+		public IEnumerable<Level> AsLevels()
 		{
 			return _levels;
 		}
