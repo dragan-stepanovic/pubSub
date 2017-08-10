@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PubSub.Solution
 {
@@ -10,43 +11,68 @@ namespace PubSub.Solution
 	/// <seealso cref="IPubSub{T}" />
 	public class SimplePubSub<T> : IPubSub<T>
 	{
-		private readonly Dictionary<string, Action<string, T>> _subscribersOld = new Dictionary<string, Action<string, T>>();
-		private readonly Subscriptions<T> _subscriptions = new Subscriptions<T>();
+		private readonly Subscribers<T> _subscribers = Subscribers<T>.Empty();
 
 		/// <summary>
 		/// Subscribes the specified topic.
 		/// </summary>
-		/// <param name="topic">The topic.</param>
+		/// <param name="topicAsString">The topic.</param>
 		/// <param name="callback">The event.</param>
 		/// <exception cref="InvalidTopicException">Topic is invalid.</exception>
-		public void Subscribe(string topic, Action<string, T> callback)
+		public void Subscribe(string topicAsString, Action<string, T> callback)
 		{
-			_subscribersOld.Add(topic, callback);
-			_subscriptions.Add(topic, callback);
+			_subscribers.Add(SubscriptionTopic.From(topicAsString), callback);
 		}
 
 		/// <summary>
 		/// Publishes the message to specified topic.
 		/// </summary>
 		/// <param name="message">The message.</param>
-		/// <param name="topic">The topic.</param>
+		/// <param name="topicAsString">The topic.</param>
 		/// <exception cref="InvalidTopicException"></exception>
-		public void Publish(string topic, T message)
+		public void Publish(string topicAsString, T message)
 		{
-			var aTopic = PublishingTopic.From(topic);
-			
-			if (_subscribersOld.ContainsKey(topic))
-				_subscribersOld[topic](topic, message);
+			//note: I'd rather pass strongly typed PublishingTopic as the parameter, but in order to not change the original tests, I did the conversion here; same goes for Subscribe method
+
+			var publishingTopic = PublishingTopic.From(topicAsString);
+			_subscribers
+				.Matching(publishingTopic)
+				.InvokeCallbacksFor(publishingTopic, message);
 		}
 	}
 
-	internal class Subscriptions<T>
+	internal class Subscribers<T>
 	{
-		private readonly Dictionary<SubscriptionTopic, Action<string, T>> _subscriptions = new Dictionary<SubscriptionTopic, Action<string, T>>();
+		private readonly Dictionary<SubscriptionTopic, Action<string, T>> _subscribers;
 
-		public void Add(string subscriptionAsString, Action<string, T> callback)
+		private Subscribers(Dictionary<SubscriptionTopic, Action<string, T>> subscribers)
 		{
-			_subscriptions.Add(SubscriptionTopic.From(subscriptionAsString), callback);
+			_subscribers = subscribers;
+		}
+
+		public void Add(SubscriptionTopic topic, Action<string, T> callback)
+		{
+			_subscribers.Add(topic, callback);
+		}
+
+		public Subscribers<T> Matching(PublishingTopic publishingTopic)
+		{
+			return new Subscribers<T>(_subscribers
+				.Where(sub => sub.Key.Matches(publishingTopic))
+				.ToDictionary(x => x.Key, x => x.Value));
+		}
+
+		public void InvokeCallbacksFor(PublishingTopic publishingTopic, T message)
+		{
+			_subscribers
+				.Values
+				.ToList()
+				.ForEach(callback => callback.Invoke(publishingTopic, message));
+		}
+
+		public static Subscribers<T> Empty()
+		{
+			return new Subscribers<T>(new Dictionary<SubscriptionTopic, Action<string, T>>());
 		}
 	}
 }

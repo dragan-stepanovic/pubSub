@@ -25,5 +25,10 @@ namespace PubSub.Solution
 
 			return new PublishingTopic(topicAsString);
 		}
+
+		public static implicit operator string(PublishingTopic topic)
+		{
+			return topic._value;
+		}
 	}
 }

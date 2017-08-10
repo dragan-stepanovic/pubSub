@@ -9,7 +9,10 @@ namespace PubSub
 	{
 		public static SubscriptionTopic From(string subscriptionAsString)
 		{
-			if (string.IsNullOrWhiteSpace(subscriptionAsString) || !subscriptionAsString.StartsWith("/") || subscriptionAsString.Contains("//") || subscriptionAsString.EndsWith("/"))
+			if (string.IsNullOrWhiteSpace(subscriptionAsString) 
+				|| !subscriptionAsString.StartsWith("/") 
+				|| subscriptionAsString.Contains("//") 
+				|| subscriptionAsString.EndsWith("/"))
 				throw new InvalidTopicException(subscriptionAsString);
 
 			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
@@ -19,6 +22,11 @@ namespace PubSub
 				throw new InvalidTopicException(subscriptionAsString);
 
 			return new SubscriptionTopic();
+		}
+
+		public bool Matches(PublishingTopic publishingTopic)
+		{
+			return true;
 		}
 	}
 }

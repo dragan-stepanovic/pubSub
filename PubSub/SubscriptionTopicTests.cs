@@ -30,5 +30,7 @@ namespace PubSub
 		{
 			SubscriptionTopic.From(subscriptionAsString);
 		}
+
+		//SubscriptionTopic
 	}
 }

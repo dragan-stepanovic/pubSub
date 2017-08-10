@@ -12,14 +12,14 @@ namespace PubSub.Solution
 		/// Publishes the message to specified topic.
 		/// </summary>
 		/// <param name="message">The message.</param>
-		/// <param name="topic">The topic.</param>
-		void Publish(string topic, T message);
+		/// <param name="topicAsString">The topic.</param>
+		void Publish(string topicAsString, T message);
 
 		/// <summary>
 		/// Subscribes to the specified topic.
 		/// </summary>
-		/// <param name="topic">The topic.</param>
+		/// <param name="topicAsString">The topic.</param>
 		/// <param name="callback">The callback.</param>
-		void Subscribe(string topic, Action<string, T> callback);
+		void Subscribe(string topicAsString, Action<string, T> callback);
 	}
 }
