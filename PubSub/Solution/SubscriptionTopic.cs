@@ -1,36 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace PubSub.Solution
 {
 	public class SubscriptionTopic
 	{
-		private readonly IEnumerable<Level> _levels;
+		private readonly Levels _levels;
 
-		private SubscriptionTopic(IEnumerable<Level> levels)
+		private SubscriptionTopic(Levels levels)
 		{
 			_levels = levels;
 		}
 
-		//todo: refactor towards better naming
-		public static SubscriptionTopic From(string subscriptionAsString)
+		public static SubscriptionTopic From(string topicAsString)
 		{
-			if (string.IsNullOrWhiteSpace(subscriptionAsString)
-				|| !subscriptionAsString.StartsWith("/")
-				|| subscriptionAsString.Contains("//")
-				|| subscriptionAsString.EndsWith("/"))
-				throw new InvalidTopicException(subscriptionAsString);
+			if (TopicNotValid(topicAsString))
+				throw new InvalidTopicException(topicAsString);
 
-			var levels = subscriptionAsString.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+			var levels = Levels.From(topicAsString);
+			if (AnyLevelNotValid(levels))
+				throw new InvalidTopicException(topicAsString); //note: I'd rather throw more specific exception in this case, e.g. InvalidLevelException, but don't want to change the initial tests
 
-			//todo: move validation to Level and change the thrown exception to InvalidLevelException
-			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
-			if (levels.Any(level => !alphaNumeric.IsMatch(level) && !level.Equals("#") && !level.Equals("+")))
-				throw new InvalidTopicException(subscriptionAsString);
+			return new SubscriptionTopic(levels);
+		}
 
-			return new SubscriptionTopic(levels.Select(level => new Level(level)));
+		//note: there's duplication in terms of topic validation in SubscriptionTopic and PublishingTopic classes, but I'd rather have small duplication in code than false abstraction
+		private static bool TopicNotValid(string topicAsString)
+		{
+			return string.IsNullOrWhiteSpace(topicAsString)
+				   || !topicAsString.StartsWith(Level.Separator)
+				   || topicAsString.Contains("//")
+				   || topicAsString.EndsWith(Level.Separator);
+		}
+
+		private static bool AnyLevelNotValid(IEnumerable<Level> levels)
+		{
+			return levels.Any(level => !level.IsAlphaNumeric() && !level.Equals(Wildcard.MultiLevel) && !level.Equals(Wildcard.SingleLevel));
 		}
 
 		public bool Matches(PublishingTopic publishingTopic)
@@ -45,7 +50,7 @@ namespace PubSub.Solution
 
 		private bool SubscribingTopicHasMoreLevelsThan(PublishingTopic publishingTopic)
 		{
-			return _levels.ToList().Count > publishingTopic.AsLevels().ToList().Count;
+			return _levels.HasMoreElementsThan(publishingTopic.AsLevels());
 		}
 	}
 }

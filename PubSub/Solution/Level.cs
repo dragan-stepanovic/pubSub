@@ -1,7 +1,10 @@
+using System.Text.RegularExpressions;
+
 namespace PubSub.Solution
 {
 	public struct Level
 	{
+		public const string Separator = "/";
 		private readonly string _value;
 
 		public Level(string asString)
@@ -11,7 +14,13 @@ namespace PubSub.Solution
 
 		public bool Matches(Level thatLevel)
 		{
-			return _value.Equals(Wildcard.SingleLevel) || _value.Equals(Wildcard.MultiLevel) || this.Equals(thatLevel);
+			return this.Equals(Wildcard.SingleLevel) || this.Equals(Wildcard.MultiLevel) || this.Equals(thatLevel);
+		}
+
+		public bool IsAlphaNumeric()
+		{
+			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
+			return alphaNumeric.IsMatch(_value);
 		}
 
 		private bool Equals(Level thatLevel)

@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solution\Level.cs" />
+    <Compile Include="Solution\Levels.cs" />
     <Compile Include="Tests\LevelTests.cs" />
     <Compile Include="Tests\Recorder.cs" />
     <Compile Include="Tests\PubSubTests.cs" />

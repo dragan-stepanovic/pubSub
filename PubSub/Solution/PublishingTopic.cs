@@ -1,46 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace PubSub.Solution
 {
 	public class PublishingTopic
 	{
-		private readonly IEnumerable<Level> _levels;
+		private readonly Levels _levels;
 
-		private PublishingTopic(IEnumerable<Level> levels)
+		private PublishingTopic(Levels levels)
 		{
 			_levels = levels;
 		}
 
-		//todo: refactor towards better naming
 		public static PublishingTopic From(string topicAsString)
 		{
-			if (string.IsNullOrWhiteSpace(topicAsString)
-				|| !topicAsString.StartsWith("/")
-				|| topicAsString.Contains("//")
-				|| topicAsString.EndsWith("/"))
+			if (TopicNotValid(topicAsString))
 				throw new InvalidTopicException(topicAsString);
 
-			var levels = topicAsString.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+			var levels = Levels.From(topicAsString);
+			if (AnyLevelNotValid(levels))
+				throw new InvalidTopicException(topicAsString); //note: I'd rather throw more specific exception in this case, e.g. InvalidLevelException
 
-			var alphaNumeric = new Regex("^[a-zA-Z0-9]*$");
-			if (levels.Any(level => !alphaNumeric.IsMatch(level)))
-				throw new InvalidTopicException(topicAsString);
-
-			return new PublishingTopic(levels.Select(asString => new Level(asString)));
+			return new PublishingTopic(levels);
 		}
 
-		public IEnumerable<Level> AsLevels()
+		private static bool TopicNotValid(string topicAsString)
+		{
+			return string.IsNullOrWhiteSpace(topicAsString)
+				|| !topicAsString.StartsWith(Level.Separator)
+				|| topicAsString.Contains("//")
+				|| topicAsString.EndsWith(Level.Separator);
+		}
+
+		private static bool AnyLevelNotValid(IEnumerable<Level> levels)
+		{
+			return levels.Any(level => !level.IsAlphaNumeric());
+		}
+
+		public Levels AsLevels()
 		{
 			return _levels;
 		}
-
+		
 		public string AsString()
 		{
-			const string separator = "/";
-			return separator + string.Join(separator, _levels);
+			return _levels.AsString();
 		}
 	}
 }

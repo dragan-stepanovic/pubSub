@@ -33,7 +33,7 @@ namespace PubSub.Solution
 
 		public void InvokeCallbacksWith(PublishingTopic publishingTopic, T message)
 		{
-			//todo: I would also change the delegate to accept SubscriptionTopic rather than generic built in string type, which doesn't distinguish between SubscriptionTopic and PublishingTopic
+			//note: I would also change the delegate to accept SubscriptionTopic rather than generic built in string type, which doesn't distinguish between SubscriptionTopic and PublishingTopic
 			_subscribers
 				.Values
 				.ToList()

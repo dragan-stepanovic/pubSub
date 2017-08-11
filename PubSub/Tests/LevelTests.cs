@@ -12,7 +12,6 @@ namespace PubSub.Tests
 		[InlineData("kitchen", "livingRoom", false)]
 		public void MatchesExactlySameLevel(string thisLevelAsString, string thatLevelAsString, bool isMatching)
 		{
-			//todo: named constructor
 			var thisLevel = new Level(thisLevelAsString);
 			var thatLevel = new Level(thatLevelAsString);
 			thisLevel.Matches(thatLevel).Should().Be(isMatching);
@@ -29,7 +28,5 @@ namespace PubSub.Tests
 			var thatLevel = new Level(thatLevelAsString);
 			wildcard.Matches(thatLevel).Should().Be(isMatching);
 		}
-
-		//todo: move validation from Topics to levels (as to the type of characters that it accepts)
 	}
 }
