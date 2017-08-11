@@ -40,17 +40,12 @@ namespace PubSub.Solution
 
 		public bool Matches(PublishingTopic publishingTopic)
 		{
-			if (SubscribingTopicHasMoreLevelsThan(publishingTopic))
+			if (_levels.HasMoreElementsThan(publishingTopic.AsLevels()))
 				return false;
 
 			return _levels
 					.Zip(publishingTopic.AsLevels(), (first, second) => first.Matches(second))
 					.All(isMatching => isMatching);
-		}
-
-		private bool SubscribingTopicHasMoreLevelsThan(PublishingTopic publishingTopic)
-		{
-			return _levels.HasMoreElementsThan(publishingTopic.AsLevels());
 		}
 	}
 }
