@@ -6,10 +6,10 @@ namespace PubSub.Solution
 {
 	internal class Subscribers<T>
 	{
-		//todo: List<Subscriber<T>>?
-		private readonly Dictionary<SubscriptionTopic, Action<string, T>> _subscribers;
+		//note: perhaps I'd try with List<Subscriber<T>> down the road, but for now the code seems to be readable enough
+		private readonly IDictionary<SubscriptionTopic, Action<string, T>> _subscribers;
 
-		private Subscribers(Dictionary<SubscriptionTopic, Action<string, T>> subscribers)
+		private Subscribers(IDictionary<SubscriptionTopic, Action<string, T>> subscribers)
 		{
 			_subscribers = subscribers;
 		}
