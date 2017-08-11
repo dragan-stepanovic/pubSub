@@ -35,12 +35,17 @@ namespace PubSub.Solution
 
 		public bool Matches(PublishingTopic publishingTopic)
 		{
-			if (_levels.ToList().Count > publishingTopic.AsLevels().ToList().Count)
+			if (SubscribingTopicHasMoreLevelsThan(publishingTopic))
 				return false;
 
 			return _levels
 					.Zip(publishingTopic.AsLevels(), (first, second) => first.Matches(second))
 					.All(isMatching => isMatching);
+		}
+
+		private bool SubscribingTopicHasMoreLevelsThan(PublishingTopic publishingTopic)
+		{
+			return _levels.ToList().Count > publishingTopic.AsLevels().ToList().Count;
 		}
 	}
 }

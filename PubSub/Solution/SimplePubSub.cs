@@ -34,7 +34,7 @@ namespace PubSub.Solution
 			var publishingTopic = PublishingTopic.From(topicAsString);
 			_subscribers
 				.Matching(publishingTopic)
-				.InvokeCallbacksFor(publishingTopic, message);
+				.InvokeCallbacksWith(publishingTopic, message);
 		}
 	}
 }

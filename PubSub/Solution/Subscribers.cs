@@ -31,7 +31,7 @@ namespace PubSub.Solution
 										.ToDictionary(x => x.Key, x => x.Value));
 		}
 
-		public void InvokeCallbacksFor(PublishingTopic publishingTopic, T message)
+		public void InvokeCallbacksWith(PublishingTopic publishingTopic, T message)
 		{
 			//todo: I would also change the delegate to accept SubscriptionTopic rather than generic built in string type, which doesn't distinguish between SubscriptionTopic and PublishingTopic
 			_subscribers
