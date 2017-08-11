@@ -37,7 +37,7 @@ namespace PubSub.Solution
 			_subscribers
 				.Values
 				.ToList()
-				.ForEach(callback => callback.Invoke(publishingTopic, message));
+				.ForEach(callback => callback.Invoke(publishingTopic.AsString(), message));
 		}
 	}
 }

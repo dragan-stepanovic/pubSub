@@ -18,8 +18,8 @@ namespace PubSub.Solution
 		public static PublishingTopic From(string topicAsString)
 		{
 			if (string.IsNullOrWhiteSpace(topicAsString)
-				|| !topicAsString.StartsWith("/") 
-				|| topicAsString.Contains("//") 
+				|| !topicAsString.StartsWith("/")
+				|| topicAsString.Contains("//")
 				|| topicAsString.EndsWith("/"))
 				throw new InvalidTopicException(topicAsString);
 
@@ -32,15 +32,15 @@ namespace PubSub.Solution
 			return new PublishingTopic(levels.Select(asString => new Level(asString)));
 		}
 
-		public static implicit operator string(PublishingTopic topic)
-		{
-			const string separator = "/";
-			return separator + string.Join(separator, topic._levels);
-		}
-
 		public IEnumerable<Level> AsLevels()
 		{
 			return _levels;
+		}
+
+		public string AsString()
+		{
+			const string separator = "/";
+			return separator + string.Join(separator, _levels);
 		}
 	}
 }
