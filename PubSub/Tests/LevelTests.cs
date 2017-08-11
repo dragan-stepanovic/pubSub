@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FluentAssertions;
 using PubSub.Solution;
 using Xunit;
@@ -6,27 +7,38 @@ namespace PubSub.Tests
 {
 	public class LevelTests
 	{
-		//todo: Member data with two test cases suites MatchesExactlySameLevel and MatchesWildcards
-		[Theory]
-		[InlineData("kitchen", "kitchen", true)]
-		[InlineData("kitchen", "livingRoom", false)]
-		public void MatchesExactlySameLevel(string thisLevelAsString, string thatLevelAsString, bool isMatching)
-		{
-			var thisLevel = new Level(thisLevelAsString);
-			var thatLevel = new Level(thatLevelAsString);
-			thisLevel.Matches(thatLevel).Should().Be(isMatching);
-		}
-
 		//note: I'd probably use AutoFixture to generate random (anonymous) data like the second level;
 		//this communicates the intent of the test better by saying that the second parameter string is actually not important in terms of business logic
 		[Theory]
-		[InlineData("+", "temperature", true)]
-		[InlineData("#", "kitchen", true)]
-		public void MatchesWildcards(string wildcardAsString, string thatLevelAsString, bool isMatching)
+		[MemberData(nameof(MatchesExactlySameLevel))]
+		[MemberData(nameof(MatchesWildcards))]
+		public void MatchesExactlySameLevel(Level thisLevel, Level thatLevel, bool isMatching)
 		{
-			var wildcard = new Level(wildcardAsString);
-			var thatLevel = new Level(thatLevelAsString);
-			wildcard.Matches(thatLevel).Should().Be(isMatching);
+			thisLevel.Matches(thatLevel).Should().Be(isMatching);
+		}
+
+		private static IEnumerable<object[]> MatchesExactlySameLevel()
+		{
+			yield return new object[]
+			{
+				new Level("kitchen"), new Level("kitchen"), true
+			};
+			yield return new object[]
+			{
+				new Level("kitchen"), new Level("livingRoom"), false
+			};
+		}
+
+		private static IEnumerable<object[]> MatchesWildcards()
+		{
+			yield return new object[]
+			{
+				Wildcard.SingleLevel, new Level("temperature"), true
+			};
+			yield return new object[]
+			{
+				Wildcard.MultiLevel, new Level("kitchen"), true
+			};
 		}
 	}
 }
