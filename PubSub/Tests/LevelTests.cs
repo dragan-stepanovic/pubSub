@@ -15,7 +15,7 @@ namespace PubSub.Tests
 			//todo: named constructor
 			var thisLevel = new Level(thisLevelAsString);
 			var thatLevel = new Level(thatLevelAsString);
-			thisLevel.Equals(thatLevel).Should().Be(isMatching);
+			thisLevel.Matches(thatLevel).Should().Be(isMatching);
 		}
 
 		//note: I'd probably use AutoFixture to generate random (anonymous) data like the second level;
@@ -27,7 +27,7 @@ namespace PubSub.Tests
 		{
 			var wildcard = new Level(wildcardAsString);
 			var thatLevel = new Level(thatLevelAsString);
-			wildcard.Equals(thatLevel).Should().Be(isMatching);
+			wildcard.Matches(thatLevel).Should().Be(isMatching);
 		}
 
 		//todo: move validation from Topics to levels (as to the type of characters that it accepts)

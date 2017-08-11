@@ -9,16 +9,20 @@ namespace PubSub.Solution
 			_value = asString;
 		}
 
-		//todo: revert back to Matches to allign better with domain
-		public bool Equals(Level thatLevel)
+		public bool Matches(Level thatLevel)
 		{
-			return _value.Equals(Wildcard.SingleLevel) || _value.Equals(Wildcard.MultiLevel) || this._value.Equals(thatLevel._value);
+			return _value.Equals(Wildcard.SingleLevel) || _value.Equals(Wildcard.MultiLevel) || this.Equals(thatLevel);
+		}
+
+		private bool Equals(Level thatLevel)
+		{
+			return this._value.Equals(thatLevel._value);
 		}
 
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Level && Equals((Level) obj);
+			return obj is Level && Equals((Level)obj);
 		}
 
 		public override int GetHashCode()

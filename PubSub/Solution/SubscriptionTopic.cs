@@ -39,7 +39,7 @@ namespace PubSub.Solution
 				return false;
 
 			return _levels
-					.Zip(publishingTopic.AsLevels(), (first, second) => first.Equals(second))
+					.Zip(publishingTopic.AsLevels(), (first, second) => first.Matches(second))
 					.All(isMatching => isMatching);
 		}
 	}
