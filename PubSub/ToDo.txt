@@ -1,4 +1,0 @@
-﻿SimplePubSub
-	check if the topic exists before subscribing
-	check if the topic exists before publishing
-
