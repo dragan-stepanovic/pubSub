@@ -21,6 +21,11 @@ namespace PubSub.Solution
 			return new Levels(topicAsString);
 		}
 
+		public bool HasMoreElementsThan(Levels thatLevels)
+		{
+			return this._values.ToList().Count > thatLevels._values.ToList().Count;
+		}
+
 		public string AsString()
 		{
 			return Level.Separator + string.Join(Level.Separator, _values);
@@ -34,11 +39,6 @@ namespace PubSub.Solution
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
-		}
-
-		public bool HasMoreElementsThan(Levels thatLevels)
-		{
-			return this._values.ToList().Count > thatLevels._values.ToList().Count;
 		}
 	}
 }

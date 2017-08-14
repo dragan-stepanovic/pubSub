@@ -41,7 +41,9 @@ namespace PubSub.Solution
 		{
 			return _levels;
 		}
-		
+
+		//note: this is needed only because of weak typing publishing topic in the subscriber (string) currently used.
+		//I didn't wan't to change the type beacuse of initial tests, but with strong typing, we would removed this method as well
 		public string AsString()
 		{
 			return _levels.AsString();
