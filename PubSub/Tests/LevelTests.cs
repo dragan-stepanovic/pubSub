@@ -12,7 +12,7 @@ namespace PubSub.Tests
 		[Theory]
 		[MemberData(nameof(MatchesExactlySameLevel))]
 		[MemberData(nameof(MatchesWildcards))]
-		public void MatchesExactlySameLevel(Level thisLevel, Level thatLevel, bool isMatching)
+		public void CanMatchAnotherLevel(Level thisLevel, Level thatLevel, bool isMatching)
 		{
 			thisLevel.Matches(thatLevel).Should().Be(isMatching);
 		}
